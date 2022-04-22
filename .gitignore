@@ -1,3 +1,14 @@
 
 *.gz
 .DS_Store
+*.npy
+ptb-xl-a-large-publicly-available-electrocardiography-dataset-1.0.1/RECORDS
+*.hea
+*.dat
+*.csv
+*.npz
+*.pkl
+*.pyc
+*.txt
+ptb_xl/ptb-xl2/RECORDS
+*.zip
