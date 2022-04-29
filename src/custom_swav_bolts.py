@@ -256,6 +256,8 @@ class CustomResNet(nn.Module):
 
     def forward_backbone(self, x):
         x = x.type(self.features[0][0].weight.type())
+       # print("x=shape")
+       # print(x.shape)
         h = self.features(x)
         h = h.squeeze()
         return h
@@ -279,9 +281,9 @@ class CustomResNet(nn.Module):
             return_counts=True,
         )[1], 0)
         start_idx = 0
+        
         for end_idx in idx_crops:
             _out = torch.cat(inputs[start_idx: end_idx])
-
             if 'cuda' in str(self.features[0][0].weight.device):
                 _out = self.forward_backbone(_out.cuda(non_blocking=True))
             else:

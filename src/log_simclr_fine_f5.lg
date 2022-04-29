@@ -1,0 +1,48 @@
+data_folder
+./data/ptb_xl_fs100/
+<class 'clinical_ts.simclr_dataset_wrapper.SimCLRDataSetWrapper'>
+injaaaa
+baleeee
+(21837, 51)
+nooo
+here
+(10906, 53)
+**********
+<class 'clinical_ts.timeseries_utils.TimeseriesDatasetCrops'>
+data_folder
+./data/ptb_xl_fs100/
+<class 'clinical_ts.simclr_dataset_wrapper.SimCLRDataSetWrapper'>
+injaaaa
+baleeee
+(21837, 51)
+nooo
+here
+(10906, 53)
+**********
+<class 'clinical_ts.timeseries_utils.TimeseriesDatasetCrops'>
+data_folder
+./data/ptb_xl_fs100/
+<class 'clinical_ts.simclr_dataset_wrapper.SimCLRDataSetWrapper'>
+injaaaa
+baleeee
+(21837, 51)
+nooo
+here
+(17441, 53)
+**********
+<class 'clinical_ts.timeseries_utils.TimeseriesDatasetCrops'>
+(bbbb(bbbb(bbbb(bbbb(bbbb(bbbb(bbbb(bbbb(bbbb(bbbb
+cpc
+load model from ../xresnet1d50_simclr_rrc_to_on_all.pt
+baabaabaabaabaabaabaabaabaabaa
+cpc
+load pretrained model
+Traceback (most recent call last):
+  File "/projects/sina/ML_final_project/src/eval.py", line 544, in <module>
+    model = load_model(
+  File "/projects/sina/ML_final_project/src/eval.py", line 257, in load_model
+    model.load_state_dict(model_state_dict)
+  File "/projects/packages/anaconda3/envs/ecg_selfsupervised/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1051, in load_state_dict
+    raise RuntimeError('Error(s) in loading state_dict for {}:\n\t{}'.format(
+RuntimeError: Error(s) in loading state_dict for CPCModel:
+	Missing key(s) in state_dict: "encoder.0.0.weight", "encoder.0.1.weight", "encoder.0.1.bias", "encoder.0.1.running_mean", "encoder.0.1.running_var", "encoder.1.0.weight", "encoder.1.1.weight", "encoder.1.1.bias", "encoder.1.1.running_mean", "encoder.1.1.running_var", "encoder.2.0.weight", "encoder.2.1.weight", "encoder.2.1.bias", "encoder.2.1.running_mean", "encoder.2.1.running_var", "encoder.3.0.weight", "encoder.3.1.weight", "encoder.3.1.bias", "encoder.3.1.running_mean", "encoder.3.1.running_var", "rnn.weight_ih_l0", "rnn.weight_hh_l0", "rnn.bias_ih_l0", "rnn.bias_hh_l0", "rnn.weight_ih_l1", "rnn.weight_hh_l1", "rnn.bias_ih_l1", "rnn.bias_hh_l1". 

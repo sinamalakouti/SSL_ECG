@@ -410,6 +410,8 @@ class TimeseriesDatasetCrops(torch.utils.data.Dataset):
         self.end_idx_mapping = np.array(self.end_idx_mapping)
             
     def __len__(self):
+       # print("utillssss")
+       # print(self.df_idx_mapping.shape)
         return len(self.df_idx_mapping)
 
     @property
@@ -474,6 +476,8 @@ class TimeseriesDatasetCrops(torch.utils.data.Dataset):
             mem_filename = str(self.memmap_filenames[memmap_file_idx],encoding='utf-8')
             mem_file = np.memmap(self.memmap_meta_filename.parent/mem_filename, self.memmap_dtype, mode='r', shape=tuple(self.memmap_shape[memmap_file_idx]))
             data = np.copy(mem_file[idx_offset + start_idx_crop: idx_offset + end_idx_crop])
+           # print('data ' *10)
+           # print(data.shape)
             del mem_file
             #print(mem_file[idx_offset + start_idx_crop: idx_offset + end_idx_crop])
             if(self.annotation):
@@ -488,20 +492,24 @@ class TimeseriesDatasetCrops(torch.utils.data.Dataset):
             ID = self.timeseries_df_data[df_idx]
 
             data = self.npy_data[ID][start_idx_crop:end_idx_crop]
-
+            #print('g' * 10)
+            #print(data.shape)
             if(self.annotation):
                 label = self.npy_data_label[ID][start_idx_crop:end_idx_crop]
             else:
                 label = self.timeseries_df_label[df_idx]
-
+        #print('data' * 10)
+        #print(data.shape)
         sample = (data,label)
 
         if(isinstance(self.transforms,list)):#transforms passed as list
             for t in self.transforms:
                 sample = t(sample)
         elif(self.transforms is not None):#single transform e.g. from torchvision.transforms.Compose
+            #print('get' *10)
+            #print(sample[0].shape)
             sample = self.transforms(sample)
-
+    
         return sample
 
     def get_sampling_weights(self, class_weight_dict,length_weighting=False, timeseries_df_group_by_col=None):

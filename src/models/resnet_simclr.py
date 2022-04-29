@@ -20,7 +20,7 @@ class ResNetSimCLR(nn.Module):
         if "xresnet" in base_model:
             self.features = nn.Sequential(*list_of_modules[:-1], list_of_modules[-1][0])
             num_ftrs = resnet[-1][-1].in_features
-            resnet[0][0] = nn.Conv1d(12, 32, kernel_size=5, stride=2, padding=2)
+            resnet[0][0] = nn.Conv1d(8, 32, kernel_size=5, stride=2, padding=2)
         else:
             self.features = nn.Sequential(*list_of_modules[:-1])
             num_ftrs = resnet.fc.in_features

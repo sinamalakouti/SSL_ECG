@@ -1,0 +1,29 @@
+data_folder
+./data/ptb_xl_fs100/
+<class 'clinical_ts.simclr_dataset_wrapper.SimCLRDataSetWrapper'>
+injaaaa
+baleeee
+(21837, 51)
+nooo
+here
+(2177, 53)
+**********
+<class 'clinical_ts.timeseries_utils.TimeseriesDatasetCrops'>
+data_folder
+./data/ptb_xl_fs100/
+<class 'clinical_ts.simclr_dataset_wrapper.SimCLRDataSetWrapper'>
+injaaaa
+Traceback (most recent call last):
+  File "/projects/sina/ML_final_project/src/eval.py", line 497, in <module>
+    _, _, valid_loader = get_dataset(
+  File "/projects/sina/ML_final_project/src/eval.py", line 489, in get_dataset
+    train_loader, valid_loader = dataset.get_data_loaders()
+  File "/projects/sina/ML_final_project/src/clinical_ts/simclr_dataset_wrapper.py", line 118, in get_data_loaders
+    train_ds, val_ds = self._get_datasets(
+  File "/projects/sina/ML_final_project/src/clinical_ts/simclr_dataset_wrapper.py", line 176, in _get_datasets
+    df_mapped, lbl_itos, mean, std = load_dataset(target_folder)
+  File "/projects/sina/ML_final_project/src/clinical_ts/timeseries_utils.py", line 89, in load_dataset
+    df = pickle.load(open(target_root/("df_memmap"+filename_postfix+".pkl"), "rb"))
+  File "/projects/packages/anaconda3/envs/ecg_selfsupervised/lib/python3.9/site-packages/numpy/core/numeric.py", line 1812, in _frombuffer
+    def _frombuffer(buf, dtype, shape, order):
+KeyboardInterrupt

@@ -1,0 +1,47 @@
+data_folder
+./data/ptb_xl_fs100/
+<class 'clinical_ts.simclr_dataset_wrapper.SimCLRDataSetWrapper'>
+injaaaa
+baleeee
+(21837, 51)
+nooo
+here
+(17441, 53)
+**********
+<class 'clinical_ts.timeseries_utils.TimeseriesDatasetCrops'>
+data_folder
+./data/ptb_xl_fs100/
+<class 'clinical_ts.simclr_dataset_wrapper.SimCLRDataSetWrapper'>
+injaaaa
+baleeee
+(21837, 51)
+nooo
+here
+(17441, 53)
+**********
+<class 'clinical_ts.timeseries_utils.TimeseriesDatasetCrops'>
+data_folder
+./data/ptb_xl_fs100/
+<class 'clinical_ts.simclr_dataset_wrapper.SimCLRDataSetWrapper'>
+injaaaa
+baleeee
+(21837, 51)
+nooo
+here
+(17441, 53)
+**********
+<class 'clinical_ts.timeseries_utils.TimeseriesDatasetCrops'>
+lr 0.004
+wd 0.1
+batch size 128
+train model...
+head-only for 0 epochs
+copying state dict before training for sanity check after training
+Traceback (most recent call last):
+  File "/projects/sina/ML_final_project/src/eval.py", line 547, in <module>
+    l1, m1, bm, bm_agg, tm, tm_agg, ckpt_epoch_lin, preds = train_model(model, train_loader, valid_loader, test_loader, args.l_epochs, loss_fn,
+  File "/projects/sina/ML_final_project/src/eval.py", line 347, in train_model
+    data_type = model.encoder[0][0].weight.type()
+  File "/projects/packages/anaconda3/envs/ecg_selfsupervised/lib/python3.9/site-packages/torch/nn/modules/module.py", line 778, in __getattr__
+    raise ModuleAttributeError("'{}' object has no attribute '{}'".format(
+torch.nn.modules.module.ModuleAttributeError: 'ResNetSimCLR' object has no attribute 'encoder'

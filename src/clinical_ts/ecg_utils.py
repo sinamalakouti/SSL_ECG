@@ -30,7 +30,8 @@ def get_available_channels(channel_labels, channel_stoi):
     else:
         return sorted([channel_stoi[c] for c in channel_labels if c in channel_stoi.keys()])
 
-def resample_data(sigbufs, channel_labels, fs, target_fs, channels=8, channel_stoi=None,skimage_transform=True,interpolation_order=3):
+def resample_data(sigbufs, channel_labels, fs, target_fs, channels=8 , channel_stoi=None,skimage_transform=True,interpolation_order=3):
+ #   print("kharrrr")
     channel_labels = [c.lower() for c in channel_labels]
     #https://github.com/scipy/scipy/issues/7324 zoom issues
     factor = target_fs/fs
@@ -76,6 +77,7 @@ def get_filename_out(filename_in, target_folder=None, suffix=""):
 
 def prepare_data_ptb_xl(data_path, min_cnt=50, target_fs=100, channels=8, channel_stoi=channel_stoi_default, target_folder=None, skimage_transform=True, recreate_data=True):
     target_root_ptb_xl = Path(".") if target_folder is None else target_folder
+    #print("kharrrr")
     #print(target_root_ptb_xl)
     target_root_ptb_xl.mkdir(parents=True, exist_ok=True)
 
@@ -153,6 +155,7 @@ def filter_ptb_xl(df,min_cnt=10,categories=["label_all","label_diag","label_form
         lbl_itos_ptb_xl[selection] = np.array(list(set([x for sublist in df_ptb_xl[selection+"_filtered"] for x in sublist])))
         lbl_stoi = {s:i for i,s in enumerate(lbl_itos_ptb_xl[selection])}
         df_ptb_xl[selection+"_filtered_numeric"]=df_ptb_xl[selection+"_filtered"].apply(lambda x:[lbl_stoi[y] for y in x])
+    print("bingoooo " * 10)
     return df_ptb_xl, lbl_itos_ptb_xl
 
 
@@ -161,7 +164,7 @@ def prepare_data_cinc(data_path, datasets=["ICBEB2018","ICBEB2018_2","INCART","P
     '''unzip archives into separate folders with dataset names from above'''
     target_root = Path(".") if target_folder is None else target_folder
     target_root.mkdir(parents=True, exist_ok=True)
-
+    
     if(recreate_data is True):
         dx_meta = pd.concat([pd.read_csv(data_path/"dx_mapping_scored.csv"),pd.read_csv(data_path/"dx_mapping_unscored.csv")],sort=True)
         dx_mapping_snomed_abbrev = {a:b for [a,b] in list(dx_meta.apply(lambda row: [row["SNOMED CT Code"],row["Abbreviation"]],axis=1))}
@@ -233,7 +236,6 @@ def prepare_data_zheng(data_path, denoised=False, target_fs=100, strat_folds=10,
     '''prepares the Zheng et al 2020 dataset'''
     target_root = Path(".") if target_folder is None else target_folder
     target_root.mkdir(parents=True, exist_ok=True)
-
     if(recreate_data is True):
         #df_attributes = pd.read_excel("./AttributesDictionary.xlsx")
         #df_conditions = pd.read_excel("./ConditionNames.xlsx")
@@ -298,7 +300,7 @@ def prepare_data_ribeiro_test(data_path, denoised=False, target_fs=100, strat_fo
     data_path = Path(data_path)
     target_root = Path(".") if target_folder is None else target_folder
     target_root.mkdir(parents=True, exist_ok=True)
-
+  #  print("okoooz")
     if(recreate_data is True):
         lbl_itos = ["1AVB","RBBB","LBBB","SBRAD","AFIB","STACH"]
         channel_labels = ["i","ii","iii","avr","avl","avf","v1","v2","v3","v4","v5","v6"]

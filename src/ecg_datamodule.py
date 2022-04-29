@@ -29,7 +29,8 @@ class ECGDataModule(LightningDataModule):
     ):
         super().__init__(*args, **kwargs)
 
-        self.dims = (12, 250)
+        self.dims = (8, 250)
+        print("nonononnnonononono")
         # self.val_split = val_split
         self.num_workers = num_workers
         self.batch_size = batch_size

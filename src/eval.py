@@ -27,6 +27,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
 def parse_args():
+    
     parser = argparse.ArgumentParser("Finetuning tests")
     parser.add_argument("--model_file")
     parser.add_argument("--method")
@@ -79,7 +80,7 @@ def get_new_state_dict(init_state_dict, lightning_state_dict, method="simclr"):
                 if l_key in lightning_state_dict.keys():
                     new_state_dict[key] = lightning_state_dict[l_key]
         elif method == "swav":
-
+            print("SWAV"*10)
             for key in init_state_dict:
                 if "features" in key:
                     l_key = key.replace("features", "model.features")
@@ -215,9 +216,13 @@ def configure_optimizer(model, batch_size, head_only=False, discriminative_lr=Fa
 
 def load_model(linear_evaluation, num_classes, use_pretrained, discriminative_lr=False, hidden=False, conv_encoder=False, bn_head=False, ps_head=0.5, location="./checkpoints/moco_baselinewonder200.ckpt", method="simclr", base_model="xresnet1d50", out_dim=16, widen=1):
     discriminative_lr_factor = 1
+    print("(bbbb"*10)
+    print(base_model)
     if use_pretrained:
         print("load model from " + location)
         discriminative_lr_factor = 0.1
+        print("baa"*10)
+        print(base_model)
         if base_model == "cpc":
             lightning_state_dict = torch.load(location, map_location=device)
 
@@ -293,8 +298,8 @@ def load_model(linear_evaluation, num_classes, use_pretrained, discriminative_lr
             else:
                 strides = [1]*4
                 kss = [1]*4
-
-            model = CPCModel(input_channels=12, strides=strides, kss=kss, features=[512]*4, n_hidden=512, n_layers=2, mlp=False, lstm=True, bias_proj=False,
+            
+            model = CPCModel(input_channels=13, strides=strides, kss=kss, features=[512]*4, n_hidden=512, n_layers=2, mlp=False, lstm=True, bias_proj=False,
                              num_classes=num_classes, skip_encoder=False, bn_encoder=True, lin_ftrs_head=lin_ftrs_head, ps_head=ps_head, bn_head=bn_head).to(device)
 
         else:
@@ -343,6 +348,8 @@ def train_model(model, train_loader, valid_loader, test_loader, epochs, loss_fn,
         for param in model.parameters():
             param.requires_grad = True
     if cpc:
+        print('cpc is ')
+        print(type(model))
         data_type = model.encoder[0][0].weight.type()
     else:
         data_type = model.features[0][0].weight.type()
@@ -473,12 +480,17 @@ def get_dataset(batch_size, num_workers, target_folder, apply_noise=False, perce
         if normalize:
             # always use PTB-XL stats
             transformations = ["Normalize"]
+            target_folder = target_folder[0]
             dataset = SimCLRDataSetWrapper(batch_size,num_workers,None,"(12, 250)",None,target_folder,[target_folder],None,None,
             mode="linear_evaluation", percentage=percentage, folds=folds, test=test, transformations=transformations, ptb_xl_label="label_all")
         else:
+            #print("folds")
+            #print(folds)
+            #print(target_folder)
+            target_folder = target_folder[0]
             dataset = SimCLRDataSetWrapper(batch_size,num_workers,None,"(12, 250)",None,target_folder,[target_folder],None,None,
                                            mode="linear_evaluation", percentage=percentage, folds=folds, test=test, ptb_xl_label="label_all")
-
+    print(type(dataset))
     train_loader, valid_loader = dataset.get_data_loaders()
     return dataset, train_loader, valid_loader
 
@@ -531,7 +543,7 @@ if __name__ == "__main__":
 
     model = load_model(
         args.linear_evaluation, 71, args.use_pretrained or args.load_finetuned, hidden=args.hidden,
-        location=args.model_file, discriminative_lr=args.discriminative_lr, method=args.method)
+        location=args.model_file, discriminative_lr=args.discriminative_lr, method=args.method, base_model = args.base_model)
     loss_fn, optimizer = configure_optimizer(
         model, args.batch_size, head_only=True, discriminative_lr=args.discriminative_lr, discriminative_lr_factor=0.1 if args.use_pretrained and args.discriminative_lr else 1)
     if not args.eval_only:
@@ -550,7 +562,7 @@ if __name__ == "__main__":
             if args.l_epochs != 0:
                 model = load_model(
                     False, 71, True, hidden=args.hidden,
-                    location=join(save_model_at, "finetuned.pt"), discriminative_lr=args.discriminative_lr, method=args.method)
+                    location=join(save_model_at, "finetuned.pt"), base_model = args.base_model, discriminative_lr=args.discriminative_lr, method=args.method)
             loss_fn, optimizer = configure_optimizer(
                 model, args.batch_size, head_only=False, discriminative_lr=args.discriminative_lr, discriminative_lr_factor=0.1 if args.use_pretrained and args.discriminative_lr else 1)
             l2, m2, bm, bm_agg, tm, tm_agg, ckpt_epoch_fin, preds = train_model(model, train_loader, valid_loader, test_loader, args.f_epochs, loss_fn,

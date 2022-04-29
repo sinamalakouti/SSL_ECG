@@ -1,0 +1,4 @@
+#CUDA_VISIBLE_DEVICES=2 python eval.py --method simclr --model_file ../xresnet1d50_simclr_rrc_to_on_all.pt --use_pretrained --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 1 > log_simclr_fine_f1.lg 2>&1
+#CUDA_VISIBLE_DEVICES=2 python eval.py --method simclr --model_file ../xresnet1d50_simclr_rrc_to_on_all.pt  --use_pretrained --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 3 > log_simclr_fine_f3.lg 2>&1
+CUDA_VISIBLE_DEVICES=2 python eval.py --method simclr --model_file ../xresnet1d50_simclr_rrc_to_on_all.pt --use_pretrained  --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 5 > log_simclr_fine_f5.lg 2>&1
+CUDA_VISIBLE_DEVICES=2 python eval.py --method simclr --model_file ../xresnet1d50_simclr_rrc_to_on_all.pt  --use_pretrained --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 8 > log_simclr_fine_f8.lg 2>&1

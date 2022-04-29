@@ -72,12 +72,16 @@ class SimCLRDataSetWrapper(object):
 
     def __init__(self, batch_size, num_workers, valid_size, input_shape, s, data_folder, target_folders, target_fs, recreate_data_ptb_xl,
                  mode="pretraining", transformations=None, t_params=None, ptb_xl_label="label_diag_superclass", filter_cinc=False, 
-                 percentage=1.0, swav=False, nmb_crops=7, folds=8, test=False):
+                 percentage=1.0, swav=False, nmb_crops=7, folds=12, test=False):
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.valid_size = valid_size
         self.s = s
+        print("dasfdfasfdf")
+        print(input_shape)
         self.input_shape = eval(input_shape)
+        print("data_folder")
+        print(data_folder)
         self.data_folder = Path(data_folder)
         # Path(target_folder+str(target_fs))
         self.target_folders = [Path(target_folder)
@@ -116,8 +120,10 @@ class SimCLRDataSetWrapper(object):
             train_ds, val_ds = self._get_datasets(
                 self.target_folders[0], transforms=data_augment)
             self.val_ds_idmap = val_ds.get_id_mapping()
-        else:
-            
+            print('*'*10)
+            print(type(train_ds))
+        
+        else:     
             wrapper_transform = SwAVDataTransform(data_augment, num_crops=self.nmb_crops) if self.swav else SimCLRDataTransform(data_augment)
             datasets = [self._get_datasets(target_folder, transforms=wrapper_transform) for target_folder in self.target_folders]
             train_datasets, valid_datasets = list(zip(*datasets))
@@ -130,12 +136,15 @@ class SimCLRDataSetWrapper(object):
 
         self.train_ds_size = len(train_ds)
         self.val_ds_size = len(val_ds)
+        #print('12344444')
+        #print(train_ds.shape)
         return train_loader, valid_loader
 
     def _get_datasets(self, target_folder, transforms=None):
         logger.info("get dataset from " + str(target_folder))
         # Dataset parameters
-        input_channels = 12
+        input_channels = 8
+        print("injaaaa")
         target_fs = 100
         # Training setting
         input_size = 250  # originally 600
@@ -164,10 +173,11 @@ class SimCLRDataSetWrapper(object):
         df_memmap_filename = "df_memmap.pkl"
         memmap_filename = "memmap.npy"
 
-        # df, lbl_itos,  mean, std = prepare_data_ptb_xl(self.data_folder, min_cnt=50, target_fs=self.target_fs,
-        #                                                                        channels=input_channels, channel_stoi=channel_stoi_default, target_folder=self.target_folder, recreate_data=self.recreate_data_ptb_xl)
+        #df, lbl_itos,  mean, std = prepare_data_ptb_xl(self.data_folder, min_cnt=50, target_fs=self.target_fs,
+         #                                                                      channels=input_channels, channel_stoi=channel_stoi_default, target_folder=self.target_folder, recreate_data=self.recreate_data_ptb_xl)
         df_mapped, lbl_itos, mean, std = load_dataset(target_folder)
-        
+        print("baleeee")
+        print(df_mapped.shape)
        
         if(self.recreate_data_ptb_xl):
             df_mapped = reformat_as_memmap(
@@ -216,6 +226,7 @@ class SimCLRDataSetWrapper(object):
             df_train = df_mapped[(df_mapped.strat_fold != test_fold) & (
                 df_mapped.strat_fold != valid_fold) & (df_mapped.label.apply(lambda x: np.sum(x) > 0))]
         else:
+            print("nooo")
             assert(self.folds < 9)
             df_train = df_mapped[(df_mapped.strat_fold.apply(lambda x: x in train_folds[range(self.folds)]) & (df_mapped.label.apply(lambda x: np.sum(x) > 0)))]
         
@@ -236,6 +247,8 @@ class SimCLRDataSetWrapper(object):
         self.df_train = df_train
         self.df_valid = df_valid 
         self.df_test = df_test
+        print('here')
+        print(df_train.shape)
         return train_ds, val_ds
 
     def _get_simclr_pipeline_transform(self):

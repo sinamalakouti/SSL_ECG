@@ -1,0 +1,7 @@
+#CUDA_VISIBLE_DEVICES=0 python eval.py --method cpc --model_file ../cpc_on_all.pt  --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 1 > log_cpc_base_f1.lg 2>&1
+#CUDA_VISIBLE_DEVICES=0 python eval.py --method cpc --model_file ../cpc_on_all.pt  --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 3 > log_cpc_base_f3.lg 2>&1
+#CUDA_VISIBLE_DEVICES=0 python eval.py --method cpc --model_file ../cpc_on_all.pt  --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 5 > log_cpc_base_f5.lg 2>&1
+#CUDA_VISIBLE_DEVICES=0 python eval.py --method cpc --model_file ../cpc_on_all.pt  --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 8 > log_cpc_base_f8.lg 2>&1
+#CUDA_VISIBLE_DEVICES=1 python eval.py --method cpc --model_file /projects/sina/ML_final_project/logs/version_1/best_model.ckpt  --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 1 --base_model cpc >log_cpc_base_f1.log 2>&1
+#CUDA_VISIBLE_DEVICES=1 python eval.py --method cpc --model_file /projects/sina/ML_final_project/logs/version_1/best_model.ckpt  --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 3 --base_model cpc >log_cpc_base_f3.lg  2>&1
+CUDA_VISIBLE_DEVICES=1 python eval.py --method cpc --model_file /projects/sina/ML_final_project/logs/version_1/best_model.ckpt  --batch_size 128  --f_epochs 50 --dataset ./data/ptb_xl_fs100/ --folds 5 --base_model cpc > log_cpc_base_f5.lg 2>&1
